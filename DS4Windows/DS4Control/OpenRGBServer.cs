@@ -39,7 +39,7 @@ namespace DS4WinWPF.DS4Control
         public static OpenRGBServer Instance => _instance.Value;
 
         private const int PROTOCOL_VERSION = 4;
-        private const int MAX_SLOTS = 4;
+        private const int MAX_SLOTS = Global.MAX_DS4_CONTROLLER_COUNT;
 
         private readonly DS4Color[] pendingColors  = new DS4Color[MAX_SLOTS];
         private readonly bool[]     hasPendingColor = new bool[MAX_SLOTS];
