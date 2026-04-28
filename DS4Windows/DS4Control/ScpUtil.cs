@@ -626,6 +626,14 @@ namespace DS4Windows
                 BLANK_VIGEMBUS_VERSION);
         public static Version minSupportedViGEmBusVersionInfo = new Version(MIN_SUPPORTED_VIGEMBUS_VERSION);
         public static bool hidHideInstalled = IsHidHideInstalled();
+
+        // OpenRGB lightbar sync — see OpenRGBSyncService.  Not persisted in beta.
+        public static bool openRGBSyncEnabled      = false;
+        public static string openRGBHost           = "localhost";
+        public static int openRGBPort              = 6742;
+        public static int openRGBSourceDeviceIndex = -1; // device index to pull colour from
+        public static int openRGBPushDeviceIndex   = -1; // device index to push colour to (-1 = off)
+
         public static bool fakerInputInstalled = IsFakerInputInstalled();
         public const string BLANK_FAKERINPUT_VERSION = "0.0.0.0";
         public static string fakerInputVersion = FakerInputVersion();

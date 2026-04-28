@@ -324,6 +324,13 @@ namespace DS4Windows
                     LightBarColor = color
                 };
                 */
+                // Allow OpenRGB sync to override the profile colour
+                if (Global.openRGBSyncEnabled &&
+                    OpenRGBSyncService.Instance.TryGetColor(out DS4Color syncColor))
+                {
+                    color = syncColor;
+                }
+
                 DS4LightbarState lightState = new DS4LightbarState
                 {
                     LightBarColor = color,
@@ -367,6 +374,11 @@ namespace DS4Windows
                     lightState.LightBarFlashDurationOff = lightState.LightBarFlashDurationOn = 1;
 
                 device.SetLightbarState(ref lightState);
+
+                // Mirror the final colour back to OpenRGB when push mode is active
+                if (Global.openRGBSyncEnabled && OpenRGBSyncService.Instance.PushEnabled)
+                    OpenRGBSyncService.Instance.PushColor(Global.openRGBPushDeviceIndex, color);
+
                 //device.SetHapticState(ref haptics);
                 //device.pushHapticState(ref haptics);
             }

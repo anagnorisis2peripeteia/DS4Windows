@@ -1613,6 +1613,14 @@ namespace DS4Windows
 
                 UpdateHidHiddenAttributes();
 
+                if (Global.openRGBSyncEnabled && Global.openRGBSourceDeviceIndex >= 0)
+                {
+                    bool openRGBConnected = OpenRGBSyncService.Instance.Start(
+                        Global.openRGBHost, Global.openRGBPort, Global.openRGBSourceDeviceIndex);
+                    if (showlog)
+                        LogDebug(openRGBConnected ? "OpenRGB sync connected" : "OpenRGB sync enabled but could not connect — lightbar will use profile colour");
+                }
+
                 if (showlog)
                 {
                     LogDebug(DS4WinWPF.Properties.Resources.SearchingController);
@@ -1823,6 +1831,9 @@ namespace DS4Windows
         {
             if (running)
             {
+                if (OpenRGBSyncService.Instance.IsRunning)
+                    OpenRGBSyncService.Instance.Stop();
+
                 running = false;
                 runHotPlug = false;
                 inServiceTask = true;
